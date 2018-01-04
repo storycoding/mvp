@@ -1,0 +1,24 @@
+{
+  "name": "toyfactory",
+  "version": "1.0.0",
+  "description": "MVP clicker game",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/storycoding/hrsf86-mvp.git"
+  },
+  "keywords": [
+    "toys",
+    "game",
+    "clicker"
+  ],
+  "author": "Nuno",
+  "license": "UNLICENCED",
+  "bugs": {
+    "url": "https://github.com/storycoding/hrsf86-mvp/issues"
+  },
+  "homepage": "https://github.com/storycoding/hrsf86-mvp#readme"
+}
