@@ -20,5 +20,17 @@
   "bugs": {
     "url": "https://github.com/storycoding/hrsf86-mvp/issues"
   },
-  "homepage": "https://github.com/storycoding/hrsf86-mvp#readme"
+  "homepage": "https://github.com/storycoding/hrsf86-mvp#readme",
+  "dependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "jquery": "^3.2.1",
+    "mongoose": "^5.0.0-rc2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "request": "^2.83.0",
+    "webpack": "^3.10.0"
+  }
 }
