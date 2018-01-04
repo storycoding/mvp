@@ -4,7 +4,10 @@
   "description": "MVP clicker game",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "babel": "babel --presets es2015 js/main.js -o build/main.bundle.js",
+    "start": "nodemon ./server/index.js localhost 8080",
+    "webpack": "webpack",
+    "test" : "nodemon --inspect ./server.js 80"
   },
   "repository": {
     "type": "git",
@@ -28,9 +31,14 @@
     "express": "^4.16.2",
     "jquery": "^3.2.1",
     "mongoose": "^5.0.0-rc2",
+    "nodemon": "^1.14.7",
+    "path": "^0.12.7",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "request": "^2.83.0",
+    "request": "^2.83.0"
+  },
+  "devDependencies": {
+    "babel-loader": "^7.1.2",
     "webpack": "^3.10.0"
   }
 }
