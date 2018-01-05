@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 let Path = require('path');
+let $ = require('jquery');
+let axios = require('axios');
 
 class App extends React.Component {
 
@@ -11,7 +13,7 @@ class App extends React.Component {
       score: 0,
       toys: 0,
       presents: 0,
-      username: undefined
+      username: 'player1'
     }
   }
 
@@ -30,8 +32,23 @@ class App extends React.Component {
   bagToy() {
     if (this.state.presents < 1) {
       console.log(`You don't have any presents ready to bag.`)
+
     } else {
       this.setState({score: this.state.score + 1, presents: this.state.presents - 1});
+
+      let postData = {
+        'username' : this.state.username,
+        'score' : this.state.score
+      }
+
+      axios.post('/scoreboard', postData)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
     }
   }
   
@@ -43,7 +60,7 @@ class App extends React.Component {
 
         <div>
           
-          <h3 id="playerName">Player1</h3>
+          <h3 id="playerName">{this.state.username}</h3>
           <img src="/img/helper.gif"/>
           <p id="playerScore">Toys: {this.state.toys}</p>
           <p id="playerScore">Presents: {this.state.presents}</p>

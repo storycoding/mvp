@@ -7,7 +7,8 @@
     "babel": "babel --presets es2015 js/main.js -o build/main.bundle.js",
     "start": "nodemon ./server/index.js localhost 8080",
     "webpack": "webpack --watch",
-    "test": "nodemon --inspect ./server.js 80"
+    "inspect": "nodemon --inspect server/index.js",
+    "watch": "watchers"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
   },
   "homepage": "https://github.com/storycoding/hrsf86-mvp#readme",
   "dependencies": {
+    "axios": "^0.17.1",
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "body-parser": "^1.18.2",
@@ -35,7 +37,8 @@
     "path": "^0.12.7",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "request": "^2.83.0"
+    "request": "^2.83.0",
+    "watchers": "^0.3.35"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
