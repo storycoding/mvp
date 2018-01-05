@@ -3,17 +3,24 @@ const path = require('path');
 const parser = require('body-parser');
 const request = require('request');
 let db = require('../database/schema.js'); // continue here
-
+ 
 const app = express();
 
 app.use(parser.json());
 
-app.use(express.static(path.join(__dirname, '../client/dist')));
+let staticPage = path.join(__dirname, '../client/dist');
+
+//console.log('static page link: ', staticPage); // all good
+
+app.use(express.static(staticPage));
 
 //wait for get requests from client
 app.get('/scoreboard', function(req,res) {
 
-  res.send('not yet implemented');
+  console.log('request sent to db');
+  db.getHighScore(function(data){
+    res.send(data);
+  })
 });
 
 app.post('/scoreboard', function (req, res) {

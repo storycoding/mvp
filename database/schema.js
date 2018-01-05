@@ -12,15 +12,38 @@ db.once('open', function() {
 
 
 let playerSchema = new mongoose.Schema({
+  _id: String,
   username:  String,
   score: Number
 });
 
 let Player = mongoose.model('Player', playerSchema);
 
-let saveScore = function(username,score) {
+
+let getHighScore = function(callback) {
+
+  Player.find({},
+    ['username','score'], // Columns to Return
+    {sort:{score: -1}}, //Sort by Date Added DESC
+    
+    function(err,scoreData){
+        console.log('callback successful on scoreData: ', scoreData);
+        callback(scoreData); // Do something with the array
+    })
+};
+
+let saveScore = function(username, score) {
+
   console.log('saveScore initiated');
+  console.log('score = ', score);
+
+  //if it exists update
+  //google how to update mongo db document
+
+  //if it doesn't already exist, create new
+
   let newPlayer = new Player({
+    '_id': username,
     'username': username,
     'score': score
   })
@@ -35,3 +58,4 @@ let saveScore = function(username,score) {
 }
 
 module.exports.saveScore = saveScore;
+module.exports.getHighScore = getHighScore;

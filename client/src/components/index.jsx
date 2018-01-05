@@ -8,6 +8,8 @@ class App extends React.Component {
 
   constructor(props) {
 
+    console.log('app initiated');
+
     let userPrompt = prompt('what is your name?');
 
     while(userPrompt.length < 1) {
@@ -20,7 +22,12 @@ class App extends React.Component {
       score: 0,
       toys: 0,
       presents: 0,
-      username: userPrompt || 'player1'
+      username: userPrompt || 'player1',
+      highScore: [
+        {username: 'Nuno', score: 9},
+        {username: 'Aaron', score: 12},
+        {username: 'Larry', score: 14}
+      ]
     }
   }
 
@@ -37,29 +44,55 @@ class App extends React.Component {
   }
   
   bagToy() {
+
+    let appAlias = this;
+
     if (this.state.presents < 1) {
       console.log(`You don't have any presents ready to bag.`)
 
     } else {
-      this.setState({score: this.state.score + 1, presents: this.state.presents - 1});
+      this.setState({score: this.state.score += this.state.presents, presents: this.state.presents = 0});
 
       let postData = {
         'username' : this.state.username,
         'score' : this.state.score
       }
+      
+      console.log('postData score = ', postData.score);
 
       axios.post('/scoreboard', postData)
       .then(function (response) {
         console.log(response);
+        
+        console.log('preparing get request to /scoreboard');
+
+
+        axios.get('/scoreboard')
+          .then(function (response) {
+            response.data.pop()//getting that last function out
+            appAlias.setState({highScore: response.data});            
+            console.log('response: ', response);
+            console.log('app.state.highScore: ', appAlias.state.highScore);
+        })
+        .catch(function (error) {
+          console.log('axios get /scoreboard error: ', error);
+        });
+
+
+        console.log('get request to /scoreboard finished');
+
+
+
+        
       })
       .catch(function (error) {
         console.log(error);
       });
 
     }
+
   }
   
-
   render() {
 
     return (
@@ -84,6 +117,40 @@ class App extends React.Component {
           <button onClick={this.wrapToy.bind(this)} id="toyWrapperButton">Wrap Toys</button>
           <button onClick={this.bagToy.bind(this)} id="toyBaggerButton">Bag Toys</button>
         </div>
+
+        <HighScore score={this.state.highScore} />
+      </div>
+    );
+  }
+}
+
+
+
+
+
+class HighScore extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log('props: ', props.score);
+
+    // this.state = {
+    //   highscore: props.score
+    // }
+  }
+
+  render() {
+
+    const scores = this.props.score.map((user, index) =>
+      <div key={index}> 
+        <span>{user.username}: {' '}</span>
+        <span>{user.score}</span>
+      </div>
+    );
+
+    return (
+      <div>
+        <h3>Highscore</h3>
+        <div>{scores}</div>
       </div>
     );
   }
