@@ -1,7 +1,10 @@
 const express = require('express');
-const app = express();
+const path = require('path');
 
-app.use(express.static('../client/dist')); //serves my bundle
+const app = express();
+//app.use(express.static('../client/dist')); //serves my bundle
+
+app.use(express.static(path.join(__dirname, '../client/dist')));
 
 //app.get('/', (req, res) => res.send('<h1>Hello World<h1>'));
 
