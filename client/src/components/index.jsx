@@ -7,13 +7,20 @@ let axios = require('axios');
 class App extends React.Component {
 
   constructor(props) {
+
+    let userPrompt = prompt('what is your name?');
+
+    while(userPrompt.length < 1) {
+      userPrompt = prompt('what is your name?');
+    }
+
     super(props);
     
     this.state = {
       score: 0,
       toys: 0,
       presents: 0,
-      username: 'player1'
+      username: userPrompt || 'player1'
     }
   }
 
