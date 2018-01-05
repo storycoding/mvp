@@ -1641,6 +1641,19 @@ var Path = __webpack_require__(34);
 var $ = __webpack_require__(35);
 var axios = __webpack_require__(36);
 
+var bgm = new Audio();
+bgm.src = "sfx/BeepBox-Song.wav";
+//bgm.play();   
+
+var makeToySFX = new Audio();
+makeToySFX.src = "sfx/smw_shell_ricochet.wav";
+
+var wrapToySFX = new Audio();
+wrapToySFX.src = "sfx/smw_hit_while_flying.wav";
+
+var bagToySFX = new Audio();
+bagToySFX.src = "sfx/smw_pipe.wav";
+
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
 
@@ -1662,7 +1675,7 @@ var App = function (_React$Component) {
       toys: 0,
       presents: 0,
       username: userPrompt || 'player1',
-      highScore: [{ username: 'Nuno', score: 9 }, { username: 'Aaron', score: 12 }, { username: 'Larry', score: 14 }]
+      highScore: []
     };
     return _this;
   }
@@ -1671,6 +1684,8 @@ var App = function (_React$Component) {
     key: 'makeToy',
     value: function makeToy() {
       this.setState({ toys: this.state.toys + 1 });
+
+      makeToySFX.play();
     }
   }, {
     key: 'wrapToy',
@@ -1679,6 +1694,8 @@ var App = function (_React$Component) {
         console.log('You don\'t have any toys left to bag.');
       } else {
         this.setState({ presents: this.state.presents + 1, toys: this.state.toys - 1 });
+
+        wrapToySFX.play();
       }
     }
   }, {
@@ -1690,6 +1707,9 @@ var App = function (_React$Component) {
       if (this.state.presents < 1) {
         console.log('You don\'t have any presents ready to bag.');
       } else {
+
+        bagToySFX.play();
+
         this.setState({ score: this.state.score += this.state.presents, presents: this.state.presents = 0 });
 
         var postData = {
@@ -1704,16 +1724,22 @@ var App = function (_React$Component) {
 
           console.log('preparing get request to /scoreboard');
 
-          axios.get('/scoreboard').then(function (response) {
-            response.data.pop(); //getting that last function out
-            appAlias.setState({ highScore: response.data });
-            console.log('response: ', response);
-            console.log('app.state.highScore: ', appAlias.state.highScore);
-          }).catch(function (error) {
-            console.log('axios get /scoreboard error: ', error);
-          });
+          var updateScore = function updateScore() {
+            axios.get('/scoreboard').then(function (response) {
+              response.data.pop(); //getting that last function out
+              appAlias.setState({ highScore: response.data });
 
-          console.log('get request to /scoreboard finished');
+              alert(response.data[0].username + ' is Santa\'s favorite Elf!');
+
+              console.log('response: ', response);
+              console.log('app.state.highScore: ', appAlias.state.highScore);
+            }).catch(function (error) {
+              console.log('axios get /scoreboard error: ', error);
+            });
+            console.log('get request to /scoreboard finished');
+          };
+
+          updateScore();
         }).catch(function (error) {
           console.log(error);
         });

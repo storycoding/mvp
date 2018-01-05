@@ -4,9 +4,25 @@ let Path = require('path');
 let $ = require('jquery');
 let axios = require('axios');
 
+
+let bgm = new Audio;
+bgm.src = "sfx/BeepBox-Song.wav"
+//bgm.play();   
+
+let makeToySFX = new Audio;
+makeToySFX.src = "sfx/smw_shell_ricochet.wav"
+
+let wrapToySFX = new Audio;
+wrapToySFX.src = "sfx/smw_hit_while_flying.wav"
+
+let bagToySFX = new Audio;
+bagToySFX.src = "sfx/smw_pipe.wav"
+
+
 class App extends React.Component {
 
   constructor(props) {
+  
 
     console.log('app initiated');
 
@@ -24,15 +40,14 @@ class App extends React.Component {
       presents: 0,
       username: userPrompt || 'player1',
       highScore: [
-        {username: 'Nuno', score: 9},
-        {username: 'Aaron', score: 12},
-        {username: 'Larry', score: 14}
       ]
     }
   }
 
   makeToy() {
     this.setState({toys: this.state.toys + 1});
+
+    makeToySFX.play();
   }
 
   wrapToy() {
@@ -40,17 +55,22 @@ class App extends React.Component {
       console.log(`You don't have any toys left to bag.`)
     } else {
       this.setState({presents: this.state.presents + 1, toys: this.state.toys - 1});
+
+      wrapToySFX.play();
     } 
   }
   
   bagToy() {
-
+    
     let appAlias = this;
 
     if (this.state.presents < 1) {
       console.log(`You don't have any presents ready to bag.`)
 
     } else {
+
+      bagToySFX.play(); 
+
       this.setState({score: this.state.score += this.state.presents, presents: this.state.presents = 0});
 
       let postData = {
@@ -66,23 +86,24 @@ class App extends React.Component {
         
         console.log('preparing get request to /scoreboard');
 
-
+      const updateScore = function() {
         axios.get('/scoreboard')
-          .then(function (response) {
-            response.data.pop()//getting that last function out
-            appAlias.setState({highScore: response.data});            
-            console.log('response: ', response);
-            console.log('app.state.highScore: ', appAlias.state.highScore);
+        .then(function (response) {
+          response.data.pop()         //getting that last function out
+          appAlias.setState({highScore: response.data});
+
+          alert(`${response.data[0].username} is Santa's favorite Elf!`);        
+    
+          console.log('response: ', response);
+          console.log('app.state.highScore: ', appAlias.state.highScore);
         })
         .catch(function (error) {
           console.log('axios get /scoreboard error: ', error);
         });
-
-
         console.log('get request to /scoreboard finished');
-
-
-
+      };
+      
+      updateScore();
         
       })
       .catch(function (error) {
@@ -94,6 +115,10 @@ class App extends React.Component {
   }
   
   render() {
+
+    
+
+    
 
     return (
       <div className="app">

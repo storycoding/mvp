@@ -9,3 +9,8 @@ h1 {
 h3 {
   color: gray;
 }
+
+.credits {
+  font-size: 12px;
+  color: gray;
+};
