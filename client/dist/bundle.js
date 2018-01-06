@@ -1637,13 +1637,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var Path = __webpack_require__(34);
 var $ = __webpack_require__(35);
 var axios = __webpack_require__(36);
 
 var bgm = new Audio();
 bgm.src = "sfx/BeepBox-Song.wav";
-//bgm.play();   
+bgm.play();
 
 var makeToySFX = new Audio();
 makeToySFX.src = "sfx/smw_shell_ricochet.wav";
@@ -1653,6 +1655,44 @@ wrapToySFX.src = "sfx/smw_hit_while_flying.wav";
 
 var bagToySFX = new Audio();
 bagToySFX.src = "sfx/smw_pipe.wav";
+
+var gifPath = ['../img/cat.gif', '../img/toysoldier.gif', '../img/dog.gif', '../img/gargoyle.gif'];
+
+var Present = function Present() {
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement('img', { src: '../img/present.gif' })
+  );
+};
+
+var Tengu = function Tengu() {
+  var _React$createElement;
+
+  return _react2.default.createElement(
+    'div',
+    (_React$createElement = { style: { position: 'fixed' } }, _defineProperty(_React$createElement, 'style', { top: 500 }), _defineProperty(_React$createElement, 'style', { left: 500 }), _React$createElement),
+    _react2.default.createElement('img', { src: '../img/tengu.gif' })
+  );
+};
+
+var Santa = function Santa() {
+  var _React$createElement2;
+
+  return _react2.default.createElement(
+    'div',
+    (_React$createElement2 = { style: { position: 'fixed' } }, _defineProperty(_React$createElement2, 'style', { top: 500 }), _defineProperty(_React$createElement2, 'style', { left: 500 }), _React$createElement2),
+    _react2.default.createElement('img', { src: '../img/santa.gif' })
+  );
+};
+
+var randomize = function randomize(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+};
+
+var randomGif = function randomGif() {};
 
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
@@ -1800,6 +1840,8 @@ var App = function (_React$Component) {
             'Bag Toys'
           )
         ),
+        _react2.default.createElement(Tengu, null),
+        _react2.default.createElement(Santa, null),
         _react2.default.createElement(HighScore, { score: this.state.highScore })
       );
     }

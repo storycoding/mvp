@@ -7,7 +7,7 @@ let axios = require('axios');
 
 let bgm = new Audio;
 bgm.src = "sfx/BeepBox-Song.wav"
-//bgm.play();   
+bgm.play();   
 
 let makeToySFX = new Audio;
 makeToySFX.src = "sfx/smw_shell_ricochet.wav"
@@ -17,6 +17,52 @@ wrapToySFX.src = "sfx/smw_hit_while_flying.wav"
 
 let bagToySFX = new Audio;
 bagToySFX.src = "sfx/smw_pipe.wav"
+
+let gifPath = [
+  `../img/cat.gif`,
+  `../img/toysoldier.gif`,
+  `../img/dog.gif`,
+  `../img/gargoyle.gif`
+];
+
+
+const Present = function() {
+  return (
+    <div>
+      <img src="../img/present.gif"/>
+    </div>
+  );
+}
+
+
+
+const Tengu = function() {
+  return (
+    <div style={{position:'fixed'}} style={{top:500}} style={{left:500}}>
+      <img src="../img/tengu.gif"/>
+    </div>
+  );
+}
+
+const Santa = function() {
+  return (
+    <div style={{position:'fixed'}} style={{top:500}} style={{left:500}}>
+      <img src="../img/santa.gif"/>
+    </div>
+  );
+}
+
+
+const randomize = function(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+};
+
+const randomGif = function() {
+
+
+};
 
 
 class App extends React.Component {
@@ -124,7 +170,7 @@ class App extends React.Component {
       <div className="app">
 
         <div>
-          
+
           <h3 id="playerName">{this.state.username}</h3>
           <img src="/img/helper.gif"/>
           <p id="playerScore">Toys: {this.state.toys}</p>
@@ -142,6 +188,10 @@ class App extends React.Component {
           <button onClick={this.wrapToy.bind(this)} id="toyWrapperButton">Wrap Toys</button>
           <button onClick={this.bagToy.bind(this)} id="toyBaggerButton">Bag Toys</button>
         </div>
+
+        <Tengu/>
+
+        <Santa/>
 
         <HighScore score={this.state.highScore} />
       </div>
